@@ -1,0 +1,9 @@
+notes.txt
+.venv
+__pycache__/*
+*/__pycache__/*
+output/
+.coverage
+.vscode/
+poetry.lock
+dist/
