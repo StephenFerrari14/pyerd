@@ -8,10 +8,9 @@ def draw(python_module, output: str | None = None):
 
     generator = Diagram(DiagramType.MERMAID)
     mermaid_diagram = generator.generate_diagram(nodes)
-    if output is None:
-        print(mermaid_diagram)
-    else:
+    if output is not None:
         with open(output, 'w') as file:
-            file.write("```mermaid")
+            file.write("```mermaid") 
             file.write(mermaid_diagram)
             file.write("```")
+    return mermaid_diagram

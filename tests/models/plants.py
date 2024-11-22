@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from tests.models.common import User
 
@@ -11,3 +11,6 @@ class BasePlant(BaseModel):
 class HousePlant(BasePlant):
     house_name: str
     owner: User
+    
+    model_config = ConfigDict(from_attributes=False)
+

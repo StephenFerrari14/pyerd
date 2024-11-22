@@ -1,5 +1,6 @@
 
 from pyerd.model_node import ModelNode
+from pyerd.utils import get_union_field_type
 
 
 def nodes_to_mermaid(nodes: list[ModelNode]) -> str:
@@ -16,7 +17,17 @@ title: From models
         # Go through fields and identify not primitives
         fields = []
         for field in node.fields.keys():
-            field_type = str(node.fields.get(field).__name__) # pyright: ignore reportOptionalMemberAccess
+            node_field: type | None = node.fields.get(field)
+            
+            if node_field is None:
+                continue
+
+            if hasattr(node_field, "__name__") and node_field.__name__ == "Union":
+                field_type = get_union_field_type(node_field.__args__)
+            elif type(node_field).__name__ == "UnionType":
+                field_type = get_union_field_type(node_field.__args__)
+            else:
+                field_type = str(node_field.__name__) # pyright: ignore reportOptionalMemberAccess
             field = f"{field_type} {field}"
             fields.append(field)
             if field_type in node_names:

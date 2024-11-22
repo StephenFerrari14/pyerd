@@ -38,6 +38,8 @@ class Donut{
 
 class Glazed{
     bool glazed
+str sprinkles
+int | str topping
 }
 
 class HousePlant{
@@ -53,5 +55,5 @@ str username
     
 def test_no_diagram_type():
   with pytest.raises(ValueError):
-    generator = Diagram("Not A Diagram")
+    generator = Diagram("Not A Diagram") # pyright: ignore reportArgumentType
     generator.generate_diagram([])

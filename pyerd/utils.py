@@ -21,11 +21,18 @@ def get_classes(module):
     return classes
 
 
-def get_nodes_for_classes(classes):
+def get_nodes_for_classes(classes) -> list[ModelNode]:
+    """Get ModelNodes for Python classes
+
+    Args:
+        classes: Python classes
+
+    Returns:
+        list[ModelNode]: List of ModelNodes
+    """
     nodes = []
 
     for cls in classes:
-        # Either get __annotations__ or model_fields
         members = inspect.getmembers(cls)
         fields = {}
         for member in members:
@@ -34,3 +41,18 @@ def get_nodes_for_classes(classes):
         parents = [parent for parent in cls.__bases__ if parent.__name__ not in PARENT_EXCLUDES]
         nodes.append(ModelNode(name=cls.__name__, parents=parents, fields=fields))
     return nodes
+
+
+def get_union_field_type(union_args: tuple) -> str:
+    """For union args (Union.__args__) get the string representation 
+    of the types of the union
+
+    Args:
+        union_args (tuple): Union.__args__
+
+    Returns:
+        str: Union args delimited by "|" 
+    """
+    union_types = [t.__name__ for t in union_args if t.__name__ not in ['NoneType']]
+    field_type = " | ".join(union_types)
+    return field_type

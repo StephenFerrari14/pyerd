@@ -25,6 +25,10 @@ Import the module and call draw()
 ```
 from pyerd import draw
 
+# single module
+from package.models import donuts
+draw(donuts, "output.md")
+
 # multiple models
 from package import models
 
@@ -49,6 +53,10 @@ pyright pyerd
 
 ```
 poetry run pytest --cov=pyerd tests/
+```
+For coverage report
+```
+poetry run pytest --cov=pyerd --cov-report html tests/
 ```
 
 
